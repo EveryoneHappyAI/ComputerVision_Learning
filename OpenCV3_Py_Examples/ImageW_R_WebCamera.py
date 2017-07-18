@@ -11,15 +11,31 @@ Created on Mon Jul 10 15:58:39 2017
 """
 
 import cv2
+import numpy as np
 
 from skimage import io
 
 image = cv2.imread("C:\\Users\\006\\Pictures\\tx.jpg")
 
-print(image)
+testImage = image.copy()
 
-io.imshow(image)
+a = testImage[:,:,2].copy();
+testImage[:,:,2] = testImage[:,:,0]
+testImage[:,:,0] = a 
+
+
+print(image[0])
+print("----------------------------------------------")
+print(testImage[0])
+
+#io.imshow(image)
+
+io.imshow(testImage)
+
+
 
 cv2.imshow("TestImg", image)
+cv2.waitKey()
+cv2.imshow("TestImg", testImage)
 cv2.waitKey()
 cv2.destroyAllWindows()
