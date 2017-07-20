@@ -12,12 +12,14 @@ Created on Mon Jul 10 15:58:39 2017
 
 import cv2
 import time
+
+help(cv2.namedWindow)
 #import numpy as np
 
 from skimage import io
 
-fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
-#fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
+#fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
+fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
 #fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
 
 image = cv2.imread(fileStr)
@@ -25,12 +27,15 @@ testImage = image.copy()
 
 i=0
 while i<100:
-    image[0:i,:,2] = 255
+    image[i,:,2] = 255
     cv2.imshow('testimg', image)
-    i+=1;
-    time.sleep(0.1)
-#cv2.waitKey()
+    print('' + str(time.time()) + ' ' + str(time.clock()))
+    
+    i+=1
+    cv2.waitKey(25)
+    #time.sleep(0.1)
 
+cv2.waitKey(0)
 
 #----------------------------
 # Switch Blue Channel between Red Channel test,OpenCV Reversed
@@ -85,4 +90,4 @@ print(image.dtype)
 #cv2.imshow("TestImg", testImage)
 #cv2.waitKey()
 cv2.destroyAllWindows()
-camCap.release()
+#camCap.release()
