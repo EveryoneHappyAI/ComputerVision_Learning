@@ -11,21 +11,25 @@ Created on Mon Jul 10 15:58:39 2017
 """
 
 import cv2
+import time
 #import numpy as np
 
 from skimage import io
 
-#fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
+fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
 #fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
-fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
+#fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
 
 image = cv2.imread(fileStr)
 testImage = image.copy()
 
-
-image[0:50,:,2] = 255
+i=0
+while i<100:
+    image[0:i,:,2] = 255
+    cv2.imshow('testimg', image)
+    i+=1;
+    time.sleep(0.1)
 #cv2.waitKey()
-
 
 
 #----------------------------
@@ -40,16 +44,45 @@ testImage[:,:,2] ^= testImage[:,:,0]
 #print(testImage[0])
 #---------------------------
 
-io.imshow(testImage)
-
+#io.imshow(testImage)
 
 print(image.shape)
 print(image.size)
 print(image.dtype)
 
 
-cv2.imshow("TestImg", image)
-cv2.waitKey()
+#
+#clked = False
+#
+#def onMouse(evt, x, y, flags, param):
+#    global clked
+#    if evt == cv2.EVENT_LBUTTONDBLCLK:
+#        clked = True
+#        
+#camCap = cv2.VideoCapture(0)
+#
+#cv2.namedWindow('VideoWin')
+#cv2.setMouseCallback('VideoWin', onMouse)
+#
+#
+#
+#suc, frame = camCap.read()
+#
+#cv2.imshow('VideoWin', frame)
+#cv2.waitKey()
+#
+##and cv2.waitKey(1)==-1 
+#while suc and not clked:
+#    cv2.imshow('VideoWin', frame)
+#    suc, frame = camCap.read()
+#    cv2.waitKey()
+
+#cv2.imshow('VideoWin', frame)
+#cv2.waitKey()
+
+#cv2.imshow("TestImg", image)
+#cv2.waitKey()
 #cv2.imshow("TestImg", testImage)
 #cv2.waitKey()
 cv2.destroyAllWindows()
+camCap.release()
