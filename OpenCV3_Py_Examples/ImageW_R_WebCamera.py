@@ -12,60 +12,61 @@ Created on Mon Jul 10 15:58:39 2017
 
 import cv2
 import time
-
 #help(cv2.namedWindow)
 import numpy as np
+
 
 from skimage import io
 from scipy import ndimage
 
-kernel_3x3 = np.array([[-1, -1, -1],
-                       [-1,  8, -1],
-                       [-1, -1, -1]])
+import sys
+sys.path.append("..")
+import FrameRunner
 
-kernel_5x5 = np.array([[-1, -1, -1, -1, -1],
-                       [-1,  1,  2,  1, -1],
-                       [-1,  2,  4,  2, -1],
-                       [-1,  1,  2,  1, -1],
-                       [-1, -1, -1, -1, -1]])
+def testProcess():
+    kernel_3x3 = np.array([[-1, -1, -1],
+                           [-1,  8, -1],
+                           [-1, -1, -1]])
+    
+    kernel_5x5 = np.array([[-1, -1, -1, -1, -1],
+                           [-1,  1,  2,  1, -1],
+                           [-1,  2,  4,  2, -1],
+                           [-1,  1,  2,  1, -1],
+                           [-1, -1, -1, -1, -1]])
 
 
-#fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
-fileStr = "C:\\Users\\yj_7u\\Pictures\\p2303767259.jpg"
+    #fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
+    #fileStr = "C:\\Users\\yj_7u\\Pictures\\p2303767259.jpg"
+    
+    fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
+    #fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
+    image = cv2.imread(fileStr, 0)
 
-#fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
-#fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
+    k3 = ndimage.convolve(image, kernel_3x3)
+    k5 = ndimage.convolve(image, kernel_5x5)
 
-image = cv2.imread(fileStr, 0)
+    blurred = cv2.GaussianBlur(image, (11,11), 0)
+    bluredImg = image - blurred
 
-k3 = ndimage.convolve(image, kernel_3x3)
-k5 = ndimage.convolve(image, kernel_5x5)
+    #cv2.imshow("3x3", k3)
+    #cv2.imshow("5x5", k5)
+    cv2.imshow("bluredImg", bluredImg)
+    if cv2.waitKey(10)>150:
+        runner.Stop()
+    
+#print(image.shape)
+#print(image.size)
+#print(image.dtype)
 
-blurred = cv2.GaussianBlur(image, (11,11), 0)
-bluredImg = image - blurred
+#cv2.waitKey(-1)
 
-#i=0
-#while i<100:
-#    image[i,:,2] = 255
-#    cv2.imshow('testimg', image)
-#    print('' + str(time.time()) + ' ' + str(time.clock()))
-#    
-#    i+=1
-#    cv2.waitKey(25)
-#    #time.sleep(0.1)
 
-cv2.waitKey(-1)
-
-cv2.imshow("3x3", k3)
-cv2.imshow("5x5", k5)
-cv2.imshow("bluredImg", bluredImg)
 #----------------------------
 # Switch Blue Channel between Red Channel test,OpenCV Reversed
 #testImage = image.copy()
 #testImage[:,:,2] ^= testImage[:,:,0]
 #testImage[:,:,0] ^= testImage[:,:,2] 
 #testImage[:,:,2] ^= testImage[:,:,0]
-cv2.waitKey(-1)
 
 #print(image[0])
 #print("----------------------------------------------")
@@ -74,23 +75,21 @@ cv2.waitKey(-1)
 
 #io.imshow(testImage)
 
-print(image.shape)
-print(image.size)
-print(image.dtype)
 
 
 
 #clked = False
-#
-#def onMouse(evt, x, y, flags, param):
-#    global clked
-#    if evt == cv2.EVENT_LBUTTONDBLCLK:
-#        clked = True
+
+def onMouse(evt, x, y, flags, param):
+    global runner
+    if evt == cv2.EVENT_LBUTTONDBLCLK:
+        runner.Stop()
+        cv2.destroyAllWindows()
 #        
 #camCap = cv2.VideoCapture(0)
 #
 #cv2.namedWindow('VideoWin')
-#cv2.setMouseCallback('VideoWin', onMouse)
+
 
 
 #
@@ -112,5 +111,9 @@ print(image.dtype)
 #cv2.waitKey()
 #cv2.imshow("TestImg", testImage)
 #cv2.waitKey()
-cv2.destroyAllWindows()
+
+cv2.setMouseCallback('bluredImg', onMouse)
+runner = FrameRunner.Runner(1)
+runner.Run(testProcess)
+
 #camCap.release()
