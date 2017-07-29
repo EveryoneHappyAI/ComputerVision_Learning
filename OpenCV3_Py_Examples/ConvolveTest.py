@@ -33,12 +33,12 @@ kernel_5x5 = np.array([[-1, -1, -1, -1, -1],
                        [-1, -1, -1, -1, -1]])
 
 
-#fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
+fileStr = "C:\\Users\\yj_7u\\Pictures\\Icon.bmp"
 #fileStr = "C:\\Users\\yj_7u\\Pictures\\p2303767259.jpg"
 
-fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
+#fileStr = "C:\\Users\\006\\Pictures\\tx.jpg"
 #fileStr = "C:\\Users\\006\\Pictures\\half.jpg"
-fileStr = "E:\\Pics\\Mask.jpg"
+#fileStr = "E:\\Pics\\Mask.jpg"
 
 image = cv2.imread(fileStr)
 imageGrey = cv2.imread(fileStr, 0)

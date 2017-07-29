@@ -43,6 +43,9 @@ while not clicked and suc:
 #    suc = capturer.grab()
     suc, frame=capturer.read()
     
+    
+    frame = cv2.GaussianBlur(frame, (25, 25), 0)
+    
     cv2.imshow(windowName, frame)
     cv2.waitKey(20)
 
